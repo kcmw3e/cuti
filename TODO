@@ -1,0 +1,18 @@
+xerr
+----------------------------------------------------------------------------------------------------
+1. add error storage
+2. add error query
+3. add error dump/clear
+4. add logging
+
+
+xalloc
+----------------------------------------------------------------------------------------------------
+1. possibly add more advanced error handling
+2. possibly add debug/no-debug modes that do/don't check for errors (i.e. NULL allocation)
+
+
+stringy
+----------------------------------------------------------------------------------------------------
+1. add xerr checks
+2. add more manipulation functions
