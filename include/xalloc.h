@@ -21,7 +21,7 @@
 // ---------------------------------------------------------------------------------------------- //
 void* xmalloc(size_t size);
 void* xcalloc(size_t size, size_t num);
-void* xrealloc(size_t size, size_t num);
+void* xrealloc(void* p, size_t size);
 
 
 
@@ -38,6 +38,6 @@ void* xcalloc(size_t size, size_t num);
 
 // description
 // |> same as [realloc] but throws allocation errors
-void* xrealloc(size_t size, size_t num);
+void* xrealloc(void* p, size_t size);
 
 #endif // CUTI_XALLOC_H
