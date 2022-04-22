@@ -30,14 +30,14 @@ void str_free(str_t str);
 
 // manipulation
 // ---------------------------------------------------------------------------------------------- //
-void str_cpy(const str_t str, str_t cpy, size_t n);
+void str_cpy(str_t str, str_t cpy, size_t n);
 
 
 // utility
 // ---------------------------------------------------------------------------------------------- //
-size_t str_len(const str_t str, size_t n);
-bool str_eq(const str_t str1, const str_t str2, size_t n);
-bool str_in_strs(const str_t str, const str_t* strs_a, size_t strs_len, size_t n);
+size_t str_len(str_t str, size_t n);
+bool str_eq(str_t str1, str_t str2, size_t n);
+bool str_in_strs(str_t str, str_t* strs_a, size_t strs_len, size_t n);
 
 
 // function descriptions
@@ -84,7 +84,7 @@ void str_free(str_t str);
 // return
 //  |> the number of characters in [str] before the first nul character, or [n] if a nul character
 //  |   was not reached
-size_t str_len(const str_t str, size_t n);
+size_t str_len(str_t str, size_t n);
 
 // description
 //  |> copy the string [str] to [cpy] within the range [n]
@@ -95,7 +95,7 @@ size_t str_len(const str_t str, size_t n);
 // notes
 //  |> if a nul character is not reached by [n] characters, cpy will still contain the nul
 //  |   character in the [n - 1] position
-void str_cpy(const str_t str, str_t cpy, size_t n);
+void str_cpy(str_t str, str_t cpy, size_t n);
 
 // description
 //  |> compares the first [n] characters in two strings to check for equality
@@ -112,7 +112,7 @@ void str_cpy(const str_t str, str_t cpy, size_t n);
 //  |   characters following is not considered
 //  |> only the first [n] characters are checked, so should [str1] or [str2] contain more characters
 //  |   they will not be checked
-bool str_eq(const str_t str1, const str_t str2, size_t n);
+bool str_eq(str_t str1, str_t str2, size_t n);
 
 // description
 //  |> checks whether a string is contained in an array of strings
@@ -127,6 +127,6 @@ bool str_eq(const str_t str1, const str_t str2, size_t n);
 // notes
 //  |> calls [str_eq()] on each string in [strs_a] until [str] is found or all the strings in
 //  |   [strs_a] have been checked
-bool str_in_strs(const str_t str, const str_t* strs_a, size_t strs_len, size_t n);
+bool str_in_strs(str_t str, str_t* strs_a, size_t strs_len, size_t n);
 
 #endif // CUTI_STRINGY_H
