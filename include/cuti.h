@@ -18,5 +18,6 @@
 #include "xerr.h"
 #include "xalloc.h"
 #include "stringy.h"
+#include "maxmin.h"
 
 #endif // CUTI_H
