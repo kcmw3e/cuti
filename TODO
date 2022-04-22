@@ -16,3 +16,5 @@ stringy
 ----------------------------------------------------------------------------------------------------
 1. add xerr checks
 2. add more manipulation functions
+3. possibly add ability to disable len checking with special parameter (0 or max of size_t)
+    |> potentially goes against the safety idea of it, though
