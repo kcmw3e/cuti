@@ -30,7 +30,7 @@ void str_free(str_t str) {
     free(str);
 }
 
-size_t str_len(str_t str, size_t n) {
+size_t str_len(const str_t str, size_t n) {
     for (size_t len = 0; len < n; len++) {
         char c = str[len];
         if (c == nul) return len;
@@ -38,7 +38,7 @@ size_t str_len(str_t str, size_t n) {
     return n;
 }
 
-void str_cpy(str_t str, str_t cpy, size_t n) {
+void str_cpy(const str_t str, str_t cpy, size_t n) {
     for (size_t i = 0; i < n; i++) {
         char c = str[i];
         cpy[i] = c;
@@ -47,7 +47,7 @@ void str_cpy(str_t str, str_t cpy, size_t n) {
     cpy[n - 1] = nul;
 }
 
-bool str_eq(str_t str1, str_t str2, size_t n) {
+bool str_eq(const str_t str1, const str_t str2, size_t n) {
     for (size_t i = 0; i < n; i++) {
         char c1 = str1[i];
         char c2 = str2[i];
@@ -55,4 +55,11 @@ bool str_eq(str_t str1, str_t str2, size_t n) {
         if (c1 == nul) return true;
     }
     return true;
+}
+
+bool str_in_strs(const str_t str, const str_t* strs_a, size_t strs_len, size_t n) {
+    for (size_t i = 0; i < strs_len; i++) {
+        if (str_eq(str, strs_a[i], n)) return true;
+    }
+    return false;
 }
