@@ -1,4 +1,4 @@
-// License
+// license
 // ---------------------------------------------------------------------------------------------- //
 // Copyright (c) 2022, Casey Walker
 // All rights reserved.
@@ -20,6 +20,7 @@ enum xerr_e {
     XERR_ALLOCATION_FAIURE,
     XERR_STRING_OVERFLOW,
     XERR_UNKNOWN,
+    XERR_UNDEFINED,
     XERR_MAX_ENUM
 };
 typedef enum xerr_e xerr_t;
