@@ -14,6 +14,8 @@
 #ifndef CUTI_MAXMIN_H
 #define CUTI_MAXMIN_H
 
+// note
+//  |> these macros are not safe to use with increment/decrement operations
 #define MAX(x, y) (x > y ? x : y)
 #define MIN(x, y) (x < y ? x : y)
 #define CLAMP(lo, mid, hi) MAX(lo, MIN(hi, mid))
