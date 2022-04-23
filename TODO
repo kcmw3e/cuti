@@ -1,20 +1,24 @@
 xerr
 ----------------------------------------------------------------------------------------------------
-1. add error storage
-2. add error query
-3. add error dump/clear
-4. add logging
+. add error query
+. add error clear
+. add logging
 
 
 xalloc
 ----------------------------------------------------------------------------------------------------
-1. possibly add more advanced error handling
-2. possibly add debug/no-debug modes that do/don't check for errors (i.e. NULL allocation)
+. possibly add more advanced error handling
+. possibly add debug/no-debug modes that do/don't check for errors (i.e. NULL allocation)
 
 
 stringy
 ----------------------------------------------------------------------------------------------------
-1. add xerr checks
-2. add more manipulation functions
-3. possibly add ability to disable len checking with special parameter (0 or max of size_t)
+. add xerr checks
+. add more manipulation functions
+. possibly add ability to disable len checking with special parameter (0 or max of size_t)
     |> potentially goes against the safety idea of it, though
+
+
+other
+----------------------------------------------------------------------------------------------------
+. add uba
