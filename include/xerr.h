@@ -28,7 +28,7 @@ typedef enum xerr_e xerr_t;
 
 // error creation and handling
 // ---------------------------------------------------------------------------------------------- //
-#define xerr(e) xerr_push(e, __LINE__, __func__, __FILE__, NULL) // macro for easier grabbing error info
+#define xerr(e) xerr_push(e, __LINE__, __func__, __FILE__, NULL) // macro for grabbing error info
 #define xerrm(e, msg) xerr(e, msg)
 void xerr_push(xerr_t e, int line, const char* func, const char* file, const char* msg);
 
