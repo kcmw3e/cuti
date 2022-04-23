@@ -84,6 +84,7 @@ void xerr_dump(FILE* dumpfile) {
 
         fprintf(dumpfile, "%s %-*s", XERR_PREFIX, prefix_str_len, prefix);
         fprintf(dumpfile, "[%0*x]:", MAX_ERR_CODE_STR_LEN, e);
+        fprintf(dumpfile, " ");
         fprintf(dumpfile, "%s[%d] in %s(). %s", file, line, func, msg);
         fprintf(dumpfile, "\n");
     }
