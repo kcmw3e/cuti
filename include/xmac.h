@@ -7,18 +7,13 @@
 // LICENSE file in the root directory of this source tree.
 //
 //
-// cuti.h
+// xmac.h
 // ---------------------------------------------------------------------------------------------- //
-// A library of various C utility functions developed alongside and primarily for the Anonymous Game
-//  Engine (https://github.com/kcmw3e/AGE)
+// A small set macros to make some things easier
 
-#ifndef CUTI_H
-#define CUTI_H
+#ifndef CUTI_XMAC_H
+#define CUTI_XMAC_H
 
-#include "xerr.h"
-#include "xalloc.h"
-#include "xmac.h"
-#include "stringy.h"
-#include "maxmin.h"
+#define UNUSED(param) (void)param
 
-#endif // CUTI_H
+#endif // CUTI_XMAC_H

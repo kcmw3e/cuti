@@ -6,7 +6,7 @@
 
 
 #define MAX_ERR_STACK_SIZE 255
-#define MAX_ERR_CODE_STR_LEN 8 // room for INT_MAX number of error codes represented as hex strings
+#define MAX_ERR_CODE_STR_LEN 8 // room for [INT_MAX] number of error codes represented as hex strings
 
 // the first few errors slots may be reserved for special errors such as error stack overflow
 enum special_err_index_e {
