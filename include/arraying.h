@@ -73,8 +73,8 @@ bool array_has(xbyte_t array[], size_t len, size_t size, xbyte_t* match_p, compa
 //  |> [filter_fn] is a function that takes a pointer to an element passed as [xbyte_t] and
 //  |   returns [true] if it should be kept or [false] if it should be replaced
 //  |> [filter_fn] should also have a parameter for [args] even if not used, in which case [args]
-//  |   may be passed to [array_has()] as [NULL]
-//  |> [args] is never used in [array_has()] and can be any pointer
+//  |   may be passed to [array_filter()] as [NULL]
+//  |> [args] is never used in [array_filter()] and can be any pointer
 void array_filter(xbyte_t array[], size_t len, size_t size, xbyte_t* rep_p, filter_fn* filter_fn, void* args[]);
 
 #endif // CUTI_ARRAYING_H
