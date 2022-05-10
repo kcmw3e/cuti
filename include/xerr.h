@@ -32,11 +32,11 @@ typedef enum xerr_e xerr_t;
 
 // error creation and handling
 // ---------------------------------------------------------------------------------------------- //
-#define xerrm(e, msg) xerr_push_error(e, __LINE__, __func__, __FILE__, msg)
+#define xerrm(e, msg) xerr_push_error((xerr_t)e, __LINE__, __func__, __FILE__, msg)
 #define xerr(e) xerrm(e, NULL)
 void xerr_push_error(xerr_t e, int line, const char* func, const char* file, const char* msg);
 
-#define xwarnm(e, msg) xerr_push_warning(e, __LINE__, __func__, __FILE__, msg)
+#define xwarnm(e, msg) xerr_push_warning((xerr_t)e, __LINE__, __func__, __FILE__, msg)
 #define xwarn(e) xwarnm(e, NULL)
 void xerr_push_warning(xerr_t e, int line, const char* func, const char* file, const char* msg);
 
