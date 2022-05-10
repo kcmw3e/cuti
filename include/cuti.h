@@ -18,6 +18,7 @@
 #include "xerr.h"
 #include "xalloc.h"
 #include "xmac.h"
+#include "arraying.h"
 #include "stringy.h"
 #include "maxmin.h"
 
