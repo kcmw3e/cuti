@@ -15,6 +15,7 @@
 #define CUTI_XALLOC_H
 
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef char xbyte_t;
 
@@ -28,7 +29,7 @@ void* xrealloc(void* p, size_t size);
 // ---------------------------------------------------------------------------------------------- //
 void xmemset(xbyte_t mem[], xbyte_t b, size_t len);
 void xmemcpy(xbyte_t src[], xbyte_t cpy[], size_t len);
-
+bool xmemeq(xbyte_t mem1[], xbyte_t mem2[], size_t len);
 
 // function descriptions
 // ---------------------------------------------------------------------------------------------- //
@@ -68,5 +69,16 @@ void xmemset(xbyte_t mem[], xbyte_t b, size_t len);
 //  |   bytes in [src]
 void xmemcpy(xbyte_t src[], xbyte_t cpy[], size_t len);
 
+// description
+//  |> check whether all bytes in two memory locations match
+// parameters
+//  |> [mem1]: a pointer to bytes in memory
+//  |> [mem2]: a pointer to bytes in memory
+//  |> [len]: minimum length of both [mem1] and [mem2]
+// return
+//  |> [true] if all bytes at [mem1] equal all bytes at [mem2]
+// notes
+//  |> if [mem1] or [mem2] is passed as [NULL] [xerr()] will be called and nothing else will happen
+bool xmemeq(xbyte_t mem1[], xbyte_t mem2[], size_t len);
 
 #endif // CUTI_XALLOC_H

@@ -36,3 +36,8 @@ void xmemcpy(xbyte_t src[], xbyte_t cpy[], size_t len) {
 
     for (size_t i = 0; i < len; i++) cpy[i] = src[i];
 }
+
+bool xmemeq(xbyte_t mem1[], xbyte_t mem2[], size_t len) {
+    for (size_t i = 0; i < len; i++) if (mem1[i] != mem2[i]) return false;
+    return true;
+}
