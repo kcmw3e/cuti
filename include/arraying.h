@@ -33,10 +33,10 @@ struct arrayable {
     size_t len;
 };
 typedef struct arrayable arrayable_t;
-#define QUICKRAY(_bytes, _len)                                                          \
+#define QUICKRAY(_bytes, _len)                                                                     \
     {                                                                                              \
         .bytes = (xbyte_t*)_bytes,                                                                 \
-        .elem_size = (size_t)sizeof(*_bytes),                                                           \
+        .elem_size = (size_t)sizeof(*_bytes),                                                      \
         .len = (size_t)_len                                                                        \
     }
 
