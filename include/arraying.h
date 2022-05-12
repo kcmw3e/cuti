@@ -33,6 +33,12 @@ struct arrayable {
     size_t len;
 };
 typedef struct arrayable arrayable_t;
+#define QUICKRAY(_bytes, _len)                                                          \
+    {                                                                                              \
+        .bytes = (xbyte_t*)_bytes,                                                                 \
+        .elem_size = (size_t)sizeof(*_bytes),                                                           \
+        .len = (size_t)_len                                                                        \
+    }
 
 typedef compare_result_t compare_fn(xbyte_t* elem1, xbyte_t* elem2, void* args);
 typedef bool filter_fn(xbyte_t* elem, void* args);
