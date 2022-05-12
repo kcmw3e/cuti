@@ -27,15 +27,22 @@ enum compare_result {
 };
 typedef enum compare_result compare_result_t;
 
-typedef compare_result_t compare_fn(xbyte_t* elem1, xbyte_t* elem2, void* args[]);
-typedef bool filter_fn(xbyte_t* elem, void* args[]);
+struct arrayable {
+    xbyte_t* bytes;
+    size_t elem_size;
+    size_t len;
+};
+typedef struct arrayable arrayable_t;
+
+typedef compare_result_t compare_fn(xbyte_t* elem1, xbyte_t* elem2, void* args);
+typedef bool filter_fn(xbyte_t* elem, void* args);
 
 // general
 // ---------------------------------------------------------------------------------------------- //
-void array_filter(xbyte_t array[], size_t len, size_t size, xbyte_t* rep_p, filter_fn* filter_fn, void* args[]);
-bool array_has(xbyte_t array[], size_t len, size_t size, xbyte_t* match_p, compare_fn* compare_fn, void* args[]);
-bool array_hasall(xbyte_t array[], size_t len, size_t size, xbyte_t matches[], size_t matches_len, compare_fn* compare_fn, void* args[]);
-bool array_hasany(xbyte_t array[], size_t len, size_t size, xbyte_t matches[], size_t matches_len, compare_fn* compare_fn, void* args[]);
+void array_filter(arrayable_t array, xbyte_t* rep_p, filter_fn* filter_fn, void* args);
+bool array_has(arrayable_t array, xbyte_t* match_p, compare_fn* compare_fn, void* args);
+bool array_hasall(arrayable_t array, arrayable_t matches, compare_fn* compare_fn, void* args);
+bool array_hasany(arrayable_t array, arrayable_t matches, compare_fn* compare_fn, void* args);
 
 
 // function descriptions
@@ -44,39 +51,82 @@ bool array_hasany(xbyte_t array[], size_t len, size_t size, xbyte_t matches[], s
 // description
 //  |> checks whether array elements pass a filter, and replaces any elements that do not
 // parameters
-//  |> [array]: a generic array, represented as bytes in memory
-//  |> [len]: length of array in number of elements
-//  |> [size]: length of each element in the array
-//  |> [rep_p]: a pointer to an element used to replace the elements that fail the filter
-//  |> [filter_fn]: a function used to filter the elements in [array]
+//  |> [array]: any generic array
+//  |   |> [.bytes]: a pointer the data of the array, must not be [NULL]
+//  |   |> [.elem_size]: the size of each element in [.bytes], must be greater than [0]
+//  |   |> [.len]: the minimum number of elements in [.bytes], may be [0]
+//  |   |> NOTE: [.elem_size*.len] must describe the minimum size of the memory at [.bytes]
+//  |> [rep_p]: a pointer to a generic element used to replace any element in [array] that does not
+//  |   pass the filter, must not be [NULL]
+//  |> [filter_fn]: a function that returns [false] if an element in [array] should be replaced or
+//  |   [true] if it should be kept, must not be [NULL]
 //  |> [args]: any extra arguments needed for [filter_fn]
-// notes
-//  |> [filter_fn] is a function that takes a pointer to an element passed as [xbyte_t] and
-//  |   returns [true] if it should be kept or [false] if it should be replaced
-//  |> [filter_fn] should also have a parameter for [args] even if not used, in which case [args]
-//  |   may be passed to [array_filter()] as [NULL]
-//  |> [args] is never used in [array_filter()] and can be any pointer
-void array_filter(xbyte_t array[], size_t len, size_t size, xbyte_t* rep_p, filter_fn* filter_fn, void* args[]);
+void array_filter(arrayable_t array, xbyte_t* rep_p, filter_fn* filter_fn, void* args);
 
 // description
 //  |> checks whether an array has a specific element
 // parameters
-//  |> [array]: a generic array, represented as bytes in memory
-//  |> [len]: length of array in number of elements
-//  |> [size]: length of each element in the array
-//  |> [match_p]: a pointer to an element to check for
-//  |> [compare_fn]: a function used to compare two elements in the array
+//  |> [array]: any generic array
+//  |   |> [.bytes]: a pointer the data of the array, must not be [NULL]
+//  |   |> [.elem_size]: the size of each element in [.bytes], must be greater than [0]
+//  |   |> [.len]: the minimum number of elements in [.bytes], may be [0]
+//  |   |> NOTE: [.elem_size*.len] must describe the minimum size of the memory at [.bytes]
+//  |> [match_p]: a pointer to a generic element used to match against any element in [array]
+//  |> [compare_fn]: a function that returns [COMPARISON_EQUAL] if an element in [array] matches
+//  |   the element at [match_p], must not be [NULL]
 //  |> [args]: any extra arguments needed for [compare_fn]
 // return
-//  |> [true] if any element in [array] was found using [compare_fn] to match with the element at
-//  |   [match_p], or [false] if not found in the array
+//  |>  [true] if the element at [match_p] was found in [array] or [false] otherwise
 // notes
-//  |> [compare_fn] is a function that takes a pointer to two elements passed as [xbyte_t] and
-//  |   returns a [compare_result_t], and if the result is [COMPARISON_EQUAL] the element at
-//  |   [match_p] is considered found
-//  |> [compare_fn] should also have a parameter for [args] even if not used, in which case [args]
-//  |   may be passed to [array_has()] as [NULL]
-//  |> [args] is never used in [array_has()] and can be any pointer
-bool array_has(xbyte_t array[], size_t len, size_t size, xbyte_t* match_p, compare_fn* compare_fn, void* args[]);
+//  |> if the length of [array] is [0], [false] will be returned
+bool array_has(arrayable_t array, xbyte_t* match_p, compare_fn* compare_fn, void* args);
+
+// description
+//  |> checks whether an array has all elements of another array
+// parameters
+//  |> [array]: any generic array
+//  |   |> [.bytes]: a pointer the data of the array, must not be [NULL]
+//  |   |> [.elem_size]: the size of each element in [.bytes], must be greater than [0]
+//  |   |> [.len]: the minimum number of elements in [.bytes], may be [0]
+//  |   |> NOTE: [.elem_size*.len] must describe the minimum size of the memory at [.bytes]
+//  |> [matches]: any generic array with all the elements to check for
+//  |   |> [.bytes]: a pointer the data of the array, must not be [NULL]
+//  |   |> [.elem_size]: the size of each element in [.bytes], must be greater than [0]
+//  |   |> [.len]: the minimum number of elements in [.bytes], may be [0]
+//  |   |> NOTE: [.elem_size*.len] must describe the minimum size of the memory at [.bytes]
+//  |> [compare_fn]: a function that returns [COMPARISON_EQUAL] if an element in [array] matches
+//  |   some element in [matches], must not be [NULL]
+//  |> [args]: any extra arguments needed for [compare_fn]
+// return
+//  |>  [true] if all elements in [matches] were found in [array] or [false] otherwise
+// notes
+//  |> if the length of [matches] is [0], [true] will be returned
+//  |> if the length of [array] is [0], [false] will be returned
+//  |> if the length of both [matches] and [array] is [0], [true] will be returned
+bool array_hasall(arrayable_t array, arrayable_t matches, compare_fn* compare_fn, void* args);
+
+// description
+//  |> checks whether an array has any element of another array
+// parameters
+//  |> [array]: any generic array
+//  |   |> [.bytes]: a pointer the data of the array, must not be [NULL]
+//  |   |> [.elem_size]: the size of each element in [.bytes], must be greater than [0]
+//  |   |> [.len]: the minimum number of elements in [.bytes], may be [0]
+//  |   |> NOTE: [.elem_size*.len] must describe the minimum size of the memory at [.bytes]
+//  |> [matches]: any generic array with all the elements to check for
+//  |   |> [.bytes]: a pointer the data of the array, must not be [NULL]
+//  |   |> [.elem_size]: the size of each element in [.bytes], must be greater than [0]
+//  |   |> [.len]: the minimum number of elements in [.bytes], may be [0]
+//  |   |> NOTE: [.elem_size*.len] must describe the minimum size of the memory at [.bytes]
+//  |> [compare_fn]: a function that returns [COMPARISON_EQUAL] if an element in [array] matches
+//  |   some element in [matches], must not be [NULL]
+//  |> [args]: any extra arguments needed for [compare_fn]
+// return
+//  |>  [true] if any element in [matches] was found in [array] or [false] otherwise
+// notes
+//  |> if the length of [matches] is [0], [false] will be returned
+//  |> if the length of [array] is [0], [false] will be returned
+//  |> if the length of both [matches] and [array] is [0], [false] will be returned
+bool array_hasany(arrayable_t array, arrayable_t matches, compare_fn* compare_fn, void* args);
 
 #endif // CUTI_ARRAYING_H
