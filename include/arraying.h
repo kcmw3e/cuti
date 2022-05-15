@@ -37,7 +37,13 @@ typedef struct arrayable arrayable_t;
     {                                                                                              \
         .bytes = (xbyte_t*)_bytes,                                                                 \
         .elem_size = (size_t)sizeof(*_bytes),                                                      \
-        .len = (size_t)_len                                                                        \
+        .len = (size_t)_len,                                                                       \
+    }
+#define QUICKRAY_EMPTY()                                                                           \
+    {                                                                                              \
+        .bytes = NULL,                                                                             \
+        .elem_size = 0,                                                                            \
+        .len = 0,                                                                                  \
     }
 
 typedef compare_result_t compare_fn(xbyte_t* elem1, xbyte_t* elem2, void* args);
