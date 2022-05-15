@@ -39,7 +39,7 @@ typedef struct arrayable arrayable_t;
         .elem_size = (size_t)sizeof(*_bytes),                                                      \
         .len = (size_t)_len,                                                                       \
     }
-#define QUICKRAY_EMPTY()                                                                           \
+#define QUICKRAY_EMPTY(_NULL, _len)                                                                \
     {                                                                                              \
         .bytes = NULL,                                                                             \
         .elem_size = 0,                                                                            \
