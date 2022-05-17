@@ -51,9 +51,10 @@ void* xrealloc(void* p, size_t size);
 // parameters
 //  |> [mem]: an array of bytes to be changed
 //  |> [b]: the value to set each byte in [mem] to
-//  |> [len]: minimum length of [mem]
+//  |> [len]: minimum length of [mem], may be [0]
 // notes
-//  |> if [mem] is passed as [NULL] [xerr()] will be called and nothing else will happen
+//  |> if [len] is greater than [0] and [mem] is passed as [NULL] [xerr()] will be called and
+//  |   nothing else will happen
 //  |> all bytes in [mem] will be changed up to and including [len - 1]
 void xmemset(xbyte_t mem[], xbyte_t b, size_t len);
 
@@ -62,9 +63,10 @@ void xmemset(xbyte_t mem[], xbyte_t b, size_t len);
 // parameters
 //  |> [src]: an array of bytes containing the memory to be copied
 //  |> [cpy]: an array of bytes to serve as the destination of the copied memory
-//  |> [len]: minimum length of both [src] and [cpy]
+//  |> [len]: minimum length of both [src] and [cpy], may be [0]
 // notes
-//  |> if [src] or [cpy] is passed as [NULL] [xerr()] will be called and nothing else will happen
+//  |> if [len] is greater than [0] and [src] or [cpy] is passed as [NULL] [xerr()] will be called
+//  |   and nothing else will happen
 //  |> all bytes in [cpy] will be changed up to and including [len - 1] using the corresponding
 //  |   bytes in [src]
 void xmemcpy(xbyte_t src[], xbyte_t cpy[], size_t len);
@@ -78,7 +80,9 @@ void xmemcpy(xbyte_t src[], xbyte_t cpy[], size_t len);
 // return
 //  |> [true] if all bytes at [mem1] equal all bytes at [mem2]
 // notes
-//  |> if [mem1] or [mem2] is passed as [NULL] [xerr()] will be called and nothing else will happen
+//  |> if [len] is greater than [0] and [mem1] or [mem2] is passed as [NULL] [xerr()] will be called
+//  |   and nothing else will happen
+//  |> if [len] is [0] [mem1] and [mem2] will be considered equal
 bool xmemeq(xbyte_t mem1[], xbyte_t mem2[], size_t len);
 
 #endif // CUTI_XALLOC_H

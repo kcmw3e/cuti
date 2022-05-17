@@ -20,6 +20,7 @@ void* xrealloc(void* p, size_t size) {
 }
 
 void xmemset(xbyte_t mem[], xbyte_t b, size_t len) {
+    if (len == 0) return;
     if (mem == NULL) {
         xerr(XERR_NULL_CHECK_FAILURE);
         return;
@@ -29,8 +30,13 @@ void xmemset(xbyte_t mem[], xbyte_t b, size_t len) {
 }
 
 void xmemcpy(xbyte_t src[], xbyte_t cpy[], size_t len) {
-    if (src == NULL || cpy == NULL) {
-        xerr(XERR_NULL_CHECK_FAILURE);
+    if (len == 0) return;
+    if (src == NULL) {
+        xerrm(XERR_NULL_CHECK_FAILURE, "src cannot be [NULL]");
+        return;
+    }
+    if (cpy == NULL) {
+        xerrm(XERR_NULL_CHECK_FAILURE, "cpy cannot be [NULL]");
         return;
     }
 
