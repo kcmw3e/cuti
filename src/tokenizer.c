@@ -16,17 +16,22 @@
 // 3.  "struct being {.name = "Frodo", .race = "Hobbit"};
 //      yields {"struct", "being", "{", ".", "name", "=", "\"", "Frodo", "\"", ",", ".", "race", "=", "\"", "Hobbit", "\"", "}", ";"
 
-tk_t tk_begin(const char* s) {
-    tk_t tk = {.start = NULL, .end = s};
+tk_t tk_begin(str_t s) {
+    tk_t tk = {
+        .s = s,
+        .t = {
+            .s = s.s,
+            .e = s.s,
+        },
+    };
     return tk_next(tk); // go ahead and get the first token
 }
 
 tk_t tk_next(tk_t tk) {
-    tk.start = tk.end; // adjust to new start based on previous token (or if first run, tk.end should be beginning of text)
+    tk.t.s = tk.t.e; // adjust to new start based on previous token (or if first run, tk.t.e should be beginning of text)
 
     // iterate along the string and find the end of the token
-    //while (*(tk.start) != '\0' && *(tk.end) != '\0') {
-    while (*(tk.end) != '\0') {
+    while (tk.t.e != tk.s.e && *(tk.t.e) != '\0') {
         // the search happens like the following
         //  (the tokens and spaces are broken up for clarity and each is surrounded by brackets):
         // "[G   a   n   d   a   l   f] [ ] [t   h   e] [ ] [G   r   a   y] [ ] [.]"
@@ -35,13 +40,13 @@ tk_t tk_next(tk_t tk) {
         //                ...    |   |   |
         //                       ^c0 ^c1 |
         //                           ^c0 ^c1
-        // tk.end points to a character not part of the token, the loop is broken
-        char c0 = *(tk.end); // current last character of the token
-        tk.end++;
-        char c1 = *(tk.end); // current character that token.end points to
+        // tk.t.e points to a character not part of the token, the loop is broken
+        char c0 = *(tk.t.e); // current last character of the token
+        tk.t.e++;
+        char c1 = *(tk.t.e); // current character that tk.t.e points to
 
         if (iswhite(c0)) {
-            tk.start++; // ignore the beginning whitespace characters and move the start until a non-whitespace is found
+            tk.t.s++; // ignore the beginning whitespace characters and move the start until a non-whitespace is found
             continue;
         }
 
@@ -56,5 +61,5 @@ tk_t tk_next(tk_t tk) {
 }
 
 bool tk_done(tk_t tk) {
-    return tk.start == tk.end;
+    return tk.t.s == tk.t.e;
 }

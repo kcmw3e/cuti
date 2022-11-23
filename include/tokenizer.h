@@ -14,7 +14,7 @@
 #ifndef TOKENIZER_H
 #define TOKENIZER_H
 
-#include "xerr.h"
+#include "stringy.h"
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -22,13 +22,13 @@
 typedef struct tk tk_t;
 
 struct tk {
-    const char* start;
-    const char* end;
+    str_t s; // source string
+    str_t t; // token in string
 };
 
 // iterator functions for tokenization
 // ---------------------------------------------------------------------------------------------- //
-tk_t tk_begin(const char* s);
+tk_t tk_begin(str_t s);
 tk_t tk_next(tk_t tk);
 bool tk_done(tk_t tk);
 
@@ -45,7 +45,7 @@ bool tk_done(tk_t tk);
 // notes
 //  |> the string [s] must NOT be freed while using the iterator; if tokens are meant to be kept in
 //  |   memory on their own after [s] is freed, they must explicitly be copied somewhere else
-tk_t tk_begin(const char* s);
+tk_t tk_begin(str_t s);
 
 // description
 //  |> finds the next token in the string specified when calling [tk_begin()]
