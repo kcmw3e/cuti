@@ -21,5 +21,7 @@
 #include "arraying.h"
 #include "stringy.h"
 #include "maxmin.h"
+#include "charnip.h"
+#include "tokenizer.h"
 
 #endif // CUTI_H
