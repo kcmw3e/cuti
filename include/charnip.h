@@ -7,7 +7,7 @@
 // LICENSE file in the root directory of this source tree.
 //
 //
-// stringy.h
+// charnip.h
 // ---------------------------------------------------------------------------------------------- //
 // A collection of string manipulation functions with built-in overflow safety.
 
