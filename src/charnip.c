@@ -3,16 +3,18 @@
 bool isalph(char c) {
     if ('a' <= c && c <= 'z') return true;
     if ('A' <= c && c <= 'Z') return true;
-
     return false;
 }
 
 bool isnum(char c) {
-    return ('0' <= c && c <= '9');
+    if ('0' <= c && c <= '9') return true;
+    return false;
 }
 
 bool isalphnum(char c) {
-    return isalph(c) || isnum(c);
+    if (isalph(c)) return true;
+    if (isnum(c)) return true;
+    return false;
 }
 
 bool iswhite(char c) {
