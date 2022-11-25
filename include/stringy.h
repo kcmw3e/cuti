@@ -25,6 +25,11 @@ struct str {
     const char* e;
 };
 
+static const str_t NULLSTR = {
+    .s = NULL,
+    .e = NULL,
+};
+
 // creation
 // ---------------------------------------------------------------------------------------------- //
 str_t str_new(const char* s, size_t len);
