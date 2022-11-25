@@ -23,5 +23,7 @@
 #include "maxmin.h"
 #include "charnip.h"
 #include "tokenizer.h"
+#include "comet.h"
+#include "cliarg.h"
 
 #endif // CUTI_H
